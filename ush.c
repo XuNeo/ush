@@ -412,7 +412,7 @@ ush_error_def ush_str2num(const uint8_t *pstr, uint32_t len, ush_num_def* num_ty
     }
     else{
       *(uint32_t*)value = uvalue;
-      *num_type = ush_num_int32;
+      *num_type = ush_num_uint32;
     }
   }
   return ush_error_ok;

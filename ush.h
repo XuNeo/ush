@@ -29,7 +29,7 @@
 #define _USH_H_
 #include "stdint.h"
 
-#define USH_MAX_ARG 128
+#define USH_MAX_ARG 32
 #define USH_ECHO "ush>>"
 
 #include "printf.h"
