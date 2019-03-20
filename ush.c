@@ -189,7 +189,7 @@ static inline ush_error_def ush_process_line(ush_def *ush){
   pfunc = ush_find_cmd(ush->argv[0]);
   if(pfunc){
     ret = pfunc(ush->argc, ush->argv);
-    USH_Print("ret \t0x%08x\n", ret);
+    USH_Print("\nret \t0x%08x\n", ret);
   }
   else{
     error = ush_error_nocmd;
