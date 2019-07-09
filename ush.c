@@ -35,11 +35,16 @@ extern int ushtable$$Base;
 extern int ushtable$$Limit;
 #define _USH_TABLE_START      (ush_cmd_def *)&ushtable$$Base
 #define _USH_TABLE_END        (ush_cmd_def *)&ushtable$$Limit
+#elif defined(__GNUC__) && defined (__ARMCOMPILER_VERSION)
+extern int ushtable$$Base;
+extern int ushtable$$Limit;
+#define _USH_TABLE_START      (ush_cmd_def *)&ushtable$$Base
+#define _USH_TABLE_END        (ush_cmd_def *)&ushtable$$Limit
 #elif defined(__GNUC__)
-extern const uint32_t __start_ushsection;
-extern const uint32_t __end_ushsection;
-#define _USH_TABLE_START      (ush_cmd_def *)&__start_ushsection
-#define _USH_TABLE_END        (ush_cmd_def *)&__end_ushsection
+//extern const uint32_t __start_ushsection;
+//extern const uint32_t __end_ushsection;
+//#define _USH_TABLE_START      (ush_cmd_def *)&__start_ushsection
+//#define _USH_TABLE_END        (ush_cmd_def *)&__end_ushsection
 #endif
 
 static ush_list_def *ush_list = {0};  /**< the ush command list added dynamically */ 
@@ -58,7 +63,7 @@ static ush_list_def *ush_list = {0};  /**< the ush command list added dynamicall
  * @brief compare if the cmd is equal to the input string.
  * @return return 1 if the two string are same.
 */
-static inline uint8_t _ush_is_str_same(const uint8_t *cmd, const uint8_t *str){
+static inline uint8_t _ush_is_str_same(const char *cmd, const char *str){
   while(*cmd && *str){
     if(*cmd != *str)
       return 0;
@@ -74,7 +79,7 @@ static inline uint8_t _ush_is_str_same(const uint8_t *cmd, const uint8_t *str){
  * @param cmd: the command string.
  * @return return the function pointer if found, otherwise, return 0.
 */
-static inline ush_func_def ush_find_cmd(uint8_t const *cmd){
+static inline ush_func_def ush_find_cmd(const char *cmd){
   ush_cmd_def *pcmd;
   ush_list_def *plist;
   plist = ush_list; //find it in the list.
@@ -107,7 +112,7 @@ static inline ush_func_def ush_find_cmd(uint8_t const *cmd){
  * @param pargc: pointer to store how many arguments are found.
  * @param argv: buffer used to store all pointers to parameters.
 */
-static inline ush_error_def ush_parser(uint8_t *pline, uint32_t buff_len, uint32_t *pargc, uint8_t *argv[USH_MAX_ARG]){
+static inline ush_error_def ush_parser(char *pline, uint32_t buff_len, uint32_t *pargc, char *argv[USH_MAX_ARG]){
   ush_error_def err = ush_error_ok;
   uint32_t argc;
 	uint8_t flag_found_quotation = 0;
@@ -133,7 +138,7 @@ static inline ush_error_def ush_parser(uint8_t *pline, uint32_t buff_len, uint32
     if(buff_len == 0)  break;
     if(*pline == '\"'){ //we are meeting a possible string.
       *pline = 0; /* Make it as 0 */
-      uint8_t *pstr_start = ++pline;  //start of string.
+      char *pstr_start = ++pline;  //start of string.
       //do we have another valid '\""'? otherwise, the parameter is not completed.
       while(*pline && buff_len){
         if(flag_escaping)
@@ -268,7 +273,7 @@ ush_error_def ush_cmdlist_append(ush_list_def *pitem){
  * @param len: length of the buffer.
  * @return return ush_erro_ok.
 */
-ush_error_def ush_init(ush_def *ush, uint8_t *pbuff, uint32_t len){
+ush_error_def ush_init(ush_def *ush, char *pbuff, uint32_t len){
   if(ush == 0) return ush_error_nullp;
   if(pbuff == 0) return ush_error_nullp;
   if(len == 0) return ush_error_buffsz;
