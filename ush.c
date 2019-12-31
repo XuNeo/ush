@@ -210,7 +210,7 @@ static inline ush_error_def ush_process_line(ush_def *ush){
  * @param len: length of the linebuffer.
  * @return return ush_error_ok if succeeded.
 */
-ush_error_def ush_process_input(ush_def *ush, const uint8_t *pbuff, uint32_t len){
+ush_error_def ush_process_input(ush_def *ush, const char *pbuff, uint32_t len){
   ush_error_def err = ush_error_ok;
   uint8_t ch;
   if(ush == 0) return ush_error_nullp;
@@ -292,7 +292,7 @@ ush_error_def ush_init(ush_def *ush, char *pbuff, uint32_t len){
  * @param value: pointer to a 32bit address to store data.
  * @return return ush_error_ok if no erros in string.
 */
-ush_error_def ush_str2num(const uint8_t *pstr, uint32_t len, ush_num_def* num_type, void *value){
+ush_error_def ush_str2num(const char *pstr, uint32_t len, ush_num_def* num_type, void *value){
   uint32_t num_base; /* base is either binary[0b] or oct[0] or hex[0x] or dec. */
   double fvalue;
   uint8_t point_pos;
@@ -426,7 +426,7 @@ ush_error_def ush_str2num(const uint8_t *pstr, uint32_t len, ush_num_def* num_ty
 /**
  * @brief build-in function to say hello
 */
-static int32_t ush_hello(uint32_t argc, uint8_t **argv){
+static int32_t ush_hello(uint32_t argc, char **argv){
   USH_Print("hello from ush \n");
   USH_Print("found argc:%d\n",argc);
   for(int i=0;i<argc;i++)
@@ -438,7 +438,7 @@ USH_REGISTER(ush_hello, hello, say hello and list the input args);
 /**
  * @brief build-in function to print supported commands.
 */
-static int32_t ush_help(uint32_t argc, uint8_t **argv){
+static int32_t ush_help(uint32_t argc, char **argv){
   ush_cmd_def *pcmd;
   ush_list_def *plist = ush_list;
   USH_Print("ush version :%x.%x.%x. Usage:\n", (USH_VER_NUMBER>>8)&0xf,\
@@ -460,7 +460,7 @@ USH_REGISTER(ush_help, ?, list the supported functions);      /** example of reg
 /**
  * @brief convert the parameters to number and print it out.
 */
-static int32_t ush_print_num(uint32_t argc, uint8_t **argv){
+static int32_t ush_print_num(uint32_t argc, char **argv){
   ush_num_def num_type;
   uint32_t value;
   argc--;
@@ -498,7 +498,7 @@ USH_REGISTER(ush_print_num, num, convert string to number);
 /**
  * @brief example to add a new command to list dynamically.
 */
-static int32_t ush_debug(uint32_t argc, uint8_t **argv){
+static int32_t ush_debug(uint32_t argc, char **argv){
   static const ush_cmd_def cmd_hello = {
       .func = ush_hello,
       .cmd = "h",

@@ -30,7 +30,7 @@
 #include "stdint.h"
 #include "ush_conf.h"
 
-#define USH_VER_NUMBER 0x010 //0.1.0
+#define USH_VER_NUMBER 0x011 //0.1.1
 
 typedef enum{
   ush_error_ok = 0,         /**< all ok */
@@ -91,7 +91,7 @@ typedef struct _ush{
 
 ush_error_def ush_init(ush_def *ush, char *pbuff, uint32_t len);
 ush_error_def ush_cmdlist_append(ush_list_def *pitem);
-ush_error_def ush_process_input(ush_def *ush, const uint8_t *pbuff, uint32_t len);
-ush_error_def ush_str2num(const uint8_t *pstr, uint32_t len, ush_num_def* num_type, void *value);
+ush_error_def ush_process_input(ush_def *ush, const char *pbuff, uint32_t len);
+ush_error_def ush_str2num(const char *pstr, uint32_t len, ush_num_def* num_type, void *value);
 
 #endif
