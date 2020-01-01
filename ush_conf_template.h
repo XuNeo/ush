@@ -34,5 +34,7 @@
 #include "stdio.h"
 #define USH_Print printf  /**< define the method to output message. */
 
+#define USH_NEW_LINE  "\n"
+
 #endif
 

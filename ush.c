@@ -194,11 +194,11 @@ static inline ush_error_def ush_process_line(ush_def *ush){
   pfunc = ush_find_cmd(ush->argv[0]);
   if(pfunc){
     ret = pfunc(ush->argc, ush->argv);
-    USH_Print("\nret \t0x%08x\n", ret);
+    USH_Print(USH_NEW_LINE"ret \t0x%08x"USH_NEW_LINE, ret);
   }
   else{
     error = ush_error_nocmd;
-    USH_Print("error command not found\n");
+    USH_Print("error command not found"USH_NEW_LINE);
   }
   USH_Print(USH_ECHO);
   return error;
@@ -427,10 +427,10 @@ ush_error_def ush_str2num(const char *pstr, uint32_t len, ush_num_def* num_type,
  * @brief build-in function to say hello
 */
 static int32_t ush_hello(uint32_t argc, char **argv){
-  USH_Print("hello from ush \n");
-  USH_Print("found argc:%d\n",argc);
+  USH_Print("hello from ush "USH_NEW_LINE);
+  USH_Print("found argc:%d"USH_NEW_LINE,argc);
   for(int i=0;i<argc;i++)
-    USH_Print("argv[%d]=[%s]\n", i, argv[i]);
+    USH_Print("argv[%d]=[%s]"USH_NEW_LINE, i, argv[i]);
   return 0x12345678;
 }
 USH_REGISTER(ush_hello, hello, say hello and list the input args);
@@ -441,15 +441,15 @@ USH_REGISTER(ush_hello, hello, say hello and list the input args);
 static int32_t ush_help(uint32_t argc, char **argv){
   ush_cmd_def *pcmd;
   ush_list_def *plist = ush_list;
-  USH_Print("ush version :%x.%x.%x. Usage:\n", (USH_VER_NUMBER>>8)&0xf,\
+  USH_Print("ush version :%x.%x.%x. Usage:"USH_NEW_LINE, (USH_VER_NUMBER>>8)&0xf,\
             (USH_VER_NUMBER>>4)&0xf,\
               USH_VER_NUMBER&0xf);
   for(pcmd = _USH_TABLE_START;pcmd<_USH_TABLE_END;pcmd++){
-    USH_Print("%-8s --\t%s\n", pcmd->cmd, pcmd->desc);
+    USH_Print("%-8s --\t%s"USH_NEW_LINE, pcmd->cmd, pcmd->desc);
   }
   if(ush_list)
   while(plist){
-    USH_Print("%-8s --\t%s\n", plist->item->cmd, plist->item->desc);
+    USH_Print("%-8s --\t%s"USH_NEW_LINE, plist->item->cmd, plist->item->desc);
     plist = plist->next;
   }
   return 0x87654321;
@@ -466,7 +466,7 @@ static int32_t ush_print_num(uint32_t argc, char **argv){
   argc--;
   argv++;
   if(argc == 0){
-    USH_Print("error need to input a number.\n");
+    USH_Print("error need to input a number."USH_NEW_LINE);
   }
   while(argc--){
     uint32_t str_len = 0;
@@ -478,15 +478,15 @@ static int32_t ush_print_num(uint32_t argc, char **argv){
     if(ush_str2num(*argv, str_len, &num_type, &value) == ush_error_ok){
       USH_Print("value type is ");
       switch(num_type){
-        case ush_num_uint32: USH_Print("uint32_t:%u\n",value); break;     
-        case ush_num_int32 : USH_Print("int32_t:%d\n",(int32_t)value); break;    
-        case ush_num_float : USH_Print("float:%f\n",*(float *)(&value)); break;
-        default:USH_Print("unknown\n"); break;
+        case ush_num_uint32: USH_Print("uint32_t:%u"USH_NEW_LINE,value); break;     
+        case ush_num_int32 : USH_Print("int32_t:%d"USH_NEW_LINE,(int32_t)value); break;    
+        case ush_num_float : USH_Print("float:%f"USH_NEW_LINE,*(float *)(&value)); break;
+        default:USH_Print("unknown"USH_NEW_LINE); break;
       }
     }
     else
     {
-      USH_Print("String[%s] is illegal\n", *argv);
+      USH_Print("String[%s] is illegal"USH_NEW_LINE, *argv);
     }
     argv ++;
   }
