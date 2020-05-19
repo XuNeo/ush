@@ -61,7 +61,7 @@ typedef struct _ush_list{
 #define uniquename(func) CONCAT(func, __LINE__)
 
 #define USH_REGISTER(func, name, desc) \
-const ush_cmd_def uniquename(func)  __attribute__((section("ushtable"))) = \
+const ush_cmd_def uniquename(func)  __attribute__((section("ushtable")))  __attribute__((used))= \
 { \
 	(void *)&func, \
   #name,	\

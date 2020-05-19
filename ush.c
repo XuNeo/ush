@@ -30,16 +30,16 @@
  * The commands that defined by macro USH_REGISTER are stored in 'ushsection' section.
  * The commands that registered by function ush_cmd_append() is listed to list ush_list;
  * */
-#ifdef __CC_ARM
+#ifdef __ARMCC_VERSION
 extern int ushtable$$Base;	
 extern int ushtable$$Limit;
 #define _USH_TABLE_START      (ush_cmd_def *)&ushtable$$Base
 #define _USH_TABLE_END        (ush_cmd_def *)&ushtable$$Limit
-#elif defined(__GNUC__) && defined (__ARMCOMPILER_VERSION)
-extern int ushtable$$Base;
-extern int ushtable$$Limit;
-#define _USH_TABLE_START      (ush_cmd_def *)&ushtable$$Base
-#define _USH_TABLE_END        (ush_cmd_def *)&ushtable$$Limit
+#elif defined(__GNUC__)
+extern int ___ushtable_start;
+extern int ___ushtable_end;
+#define _USH_TABLE_START      (ush_cmd_def *)&___ushtable_start
+#define _USH_TABLE_END        (ush_cmd_def *)&___ushtable_end
 #elif defined(__GNUC__)
 //extern const uint32_t __start_ushsection;
 //extern const uint32_t __end_ushsection;
