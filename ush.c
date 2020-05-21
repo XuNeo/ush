@@ -41,10 +41,10 @@ extern int ___ushtable_end;
 #define _USH_TABLE_START      (ush_cmd_def *)&___ushtable_start
 #define _USH_TABLE_END        (ush_cmd_def *)&___ushtable_end
 #elif defined(__GNUC__)
-//extern const uint32_t __start_ushsection;
-//extern const uint32_t __end_ushsection;
-//#define _USH_TABLE_START      (ush_cmd_def *)&__start_ushsection
-//#define _USH_TABLE_END        (ush_cmd_def *)&__end_ushsection
+extern const uint32_t ___ushtable_start;
+extern const uint32_t ___ushtable_end;
+#define _USH_TABLE_START      (ush_cmd_def *)&___ushtable_start
+#define _USH_TABLE_END        (ush_cmd_def *)&___ushtable_end
 #endif
 
 static ush_list_def *ush_list = {0};  /**< the ush command list added dynamically */ 
